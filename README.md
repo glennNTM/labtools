@@ -24,13 +24,18 @@ bun run dev
 ```
 src/
   assets/       Logos et images importés
-  components/   landing/, layout/, ui/
-  config/       Constantes et configuration
-  hooks/        Hooks personnalisés
-  lib/          Intégrations et helpers tiers
-  pages/        Pages
+  components/   landing/ (une section = un composant), layout/, ui/
+  config/       site.ts (coordonnées, envoi du formulaire), content.ts (tous les textes)
+  hooks/        Hooks personnalisés (animations GSAP, meta de page)
+  lib/          gsap.ts, router.ts (mini-routeur sans dépendance)
+  pages/        Accueil, pages légales, 404
+  types/        Types TypeScript partagés
   utils/        Fonctions utilitaires
 tests/          Tests
 ```
+
+Les design tokens (couleurs, typo, rayons, ombres) sont dans `src/index.css` (`@theme`).
+
+Le site utilise des routes côté client (`/mentions-legales`, `/confidentialite`, `/cookies`) : en production, l'hébergeur doit renvoyer `index.html` pour toutes les routes.
 
 L'alias `@` pointe vers `src/` (ex. `import logo from '@/assets/logo-avec-nom.svg'`).
