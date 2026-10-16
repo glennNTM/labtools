@@ -1,5 +1,8 @@
 import type { ComponentType } from 'react'
+import { useConsent } from '@/lib/consent'
 import { usePathname } from '@/lib/router'
+import { Analytics } from '@/components/layout/Analytics'
+import { CookieBanner } from '@/components/layout/CookieBanner'
 import { Footer } from '@/components/layout/Footer'
 import { Navbar } from '@/components/layout/Navbar'
 import { SkipLink } from '@/components/layout/SkipLink'
@@ -19,15 +22,18 @@ const routes: Record<string, ComponentType> = {
 function App() {
   const pathname = usePathname()
   const Page = routes[pathname] ?? NotFound
+  const { consent } = useConsent()
 
   return (
     <>
       <SkipLink />
+      <CookieBanner />
       <Navbar />
       <main id="contenu" tabIndex={-1} className="outline-none">
         <Page key={pathname} />
       </main>
       <Footer />
+      {consent?.analytics && <Analytics />}
     </>
   )
 }

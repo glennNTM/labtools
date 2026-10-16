@@ -1,9 +1,11 @@
 import { useRef, useState } from 'react'
-import type { FormEvent } from 'react'
+import type { SubmitEvent } from 'react'
 import { form } from '@/config/content'
 import { site, submitProject } from '@/config/site'
+import { trackEvent } from '@/lib/analytics'
 import { Icon } from '@/components/ui/Icon'
 import { Link } from '@/components/ui/Link'
+import { PROJECT_MAX_LENGTH, validateProject } from '@/utils/validateProject'
 import type {
   ProjectFormErrors as Errors,
   ProjectFormField as Field,
@@ -11,20 +13,7 @@ import type {
   ProjectSubmission,
 } from '@/types/form'
 
-const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/
-const PROJECT_MIN = 20
-const PROJECT_MAX = 500
 const ORDER: Field[] = ['name', 'email', 'profile', 'project', 'consent']
-
-function validate(data: ProjectSubmission, consent: boolean): Errors {
-  const errors: Errors = {}
-  if (!data.name.trim()) errors.name = form.fields.name.error
-  if (!EMAIL.test(data.email.trim())) errors.email = form.fields.email.error
-  if (!data.profile) errors.profile = form.fields.profile.error
-  if (data.project.trim().length < PROJECT_MIN) errors.project = form.fields.project.error
-  if (!consent) errors.consent = form.fields.consent.error
-  return errors
-}
 
 const inputClass =
   'mt-2 block w-full rounded-btn border border-line bg-white px-4 py-3 text-navy placeholder:text-slate aria-invalid:border-coral-ink aria-invalid:ring-1 aria-invalid:ring-coral-ink'
@@ -44,16 +33,20 @@ export function ProjectForm() {
   const [errors, setErrors] = useState<Errors>({})
   const [status, setStatus] = useState<Status>('idle')
 
-  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
+  async function handleSubmit(event: SubmitEvent<HTMLFormElement>) {
     event.preventDefault()
     const formData = new FormData(event.currentTarget)
-    const data: ProjectSubmission = {
-      name: String(formData.get('name') ?? ''),
-      email: String(formData.get('email') ?? ''),
-      profile: String(formData.get('profile') ?? ''),
-      project: String(formData.get('project') ?? ''),
+    const text = (name: keyof ProjectSubmission) => {
+      const value = formData.get(name)
+      return typeof value === 'string' ? value : ''
     }
-    const nextErrors = validate(data, formData.get('consent') === 'on')
+    const data: ProjectSubmission = {
+      name: text('name'),
+      email: text('email'),
+      profile: text('profile'),
+      project: text('project'),
+    }
+    const nextErrors = validateProject(data, formData.get('consent') === 'on')
     setErrors(nextErrors)
 
     const firstInvalid = ORDER.find((field) => nextErrors[field])
@@ -66,6 +59,7 @@ export function ProjectForm() {
     try {
       await submitProject(data)
       setStatus('success')
+      trackEvent('generate_lead', { profile: data.profile })
       formRef.current?.reset()
     } catch {
       setStatus('error')
@@ -180,7 +174,7 @@ export function ProjectForm() {
           id="project"
           name="project"
           rows={4}
-          maxLength={PROJECT_MAX}
+          maxLength={PROJECT_MAX_LENGTH}
           className={`${inputClass} resize-y`}
           aria-invalid={errors.project ? true : undefined}
           aria-describedby={describedBy('project', 'project-hint')}

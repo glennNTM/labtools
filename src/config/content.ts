@@ -5,6 +5,7 @@
  * sont des placeholders : ne jamais les remplacer par des chiffres non vérifiés.
  */
 import type { IconName } from '@/types/icon'
+import type { TeamMember } from '@/types/team'
 
 export const cta = {
   primary: { label: 'Lancer mon projet', href: '/#lancer' },
@@ -16,6 +17,7 @@ export const nav = [
   { label: 'Activités', href: '/#activites' },
   { label: 'Pour qui', href: '/#pour-qui' },
   { label: 'Méthode', href: '/#methode' },
+  { label: 'Équipe', href: '/#equipe' },
   { label: 'FAQ', href: '/#faq' },
 ]
 
@@ -151,6 +153,8 @@ export const testimonials = {
   previous: 'Témoignage précédent',
   next: 'Témoignage suivant',
   goTo: 'Afficher le témoignage',
+  pause: 'Mettre en pause le défilement des témoignages',
+  play: 'Reprendre le défilement des témoignages',
   of: 'sur',
   items: [
     {
@@ -176,16 +180,21 @@ export const midCta = {
   objection: 'Aucune compétence technique requise.',
 }
 
-// TODO(chiffres) : remplacer chaque [X] par une donnée réelle, ou retirer la ligne
-export const keyFigures = {
-  eyebrow: 'En chiffres',
-  title: 'L’impact LabTools.',
-  items: [
-    { value: '[X]', label: 'projets accompagnés' },
-    { value: '[X]', label: 'produits mis en ligne' },
-    { value: '[X]', label: 'pays représentés' },
-    { value: '[X]', label: 'porteurs de projet formés' },
-  ],
+// TODO(équipe) : remplacer par les vrais membres. Photo : portrait 4:5 (≥ 800×1000) dans
+// src/assets/team/, importée puis passée dans `photo`. `linkedin` vide = pas de bouton « Suivre ».
+const members: TeamMember[] = [
+  { name: '[Prénom Nom]', role: '[Fondateur·rice, CEO]', linkedin: '' },
+  { name: '[Prénom Nom]', role: '[Cofondateur·rice, CTO]', linkedin: '' },
+  { name: '[Prénom Nom]', role: '[Cofondateur·rice, responsable incubation]', linkedin: '' },
+]
+
+export const team = {
+  eyebrow: 'L’équipe',
+  title: 'Ceux qui construisent LabTools.',
+  intro:
+    'Une équipe technique et business qui accompagne chaque porteur de projet, de l’idée jusqu’au produit en ligne.',
+  follow: 'Suivre',
+  members,
 }
 
 export const faq = {
@@ -264,11 +273,28 @@ export const form = {
 }
 
 export const footer = {
+  tagline:
+    'Incubateur de technologies pour l’Afrique. LabTools accompagne les porteurs de projet de l’idée jusqu’au produit en ligne.',
+  exploreTitle: 'Explorer',
+  contactTitle: 'Contact',
+  socialTitle: 'Réseaux sociaux',
+  explore: [...nav, cta.primary],
   legalTitle: 'Informations légales',
   legal: [
     { label: 'Mentions légales', href: '/mentions-legales' },
     { label: 'Confidentialité', href: '/confidentialite' },
     { label: 'Cookies', href: '/cookies' },
   ],
+  rights: 'Tous droits réservés.',
   backToTop: 'Retour en haut',
+}
+
+export const cookieBanner = {
+  title: 'Cookies et mesure d’audience',
+  text: 'Avec votre accord, nous utilisons Google Analytics pour mesurer l’audience du site et l’améliorer. Aucune donnée n’est utilisée à des fins publicitaires. Vous pouvez changer d’avis à tout moment depuis le pied de page.',
+  learnMore: 'En savoir plus',
+  accept: 'Accepter',
+  refuse: 'Refuser',
+  manage: 'Gérer les cookies',
+  current: { accepted: 'Choix actuel : mesure d’audience acceptée.', refused: 'Choix actuel : mesure d’audience refusée.' },
 }

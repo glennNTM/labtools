@@ -1,14 +1,15 @@
 import type { ProjectSubmission } from '@/types/form'
+import type { Social } from '@/types/ui'
 
 /**
  * Informations de l'entreprise.
- * TODO(coordonnées) : toutes les valeurs entre crochets ou en .example sont des
+ * TODO(coordonnées) : toutes les valeurs entre crochets sont des
  * placeholders. Les remplacer par les vraies informations avant mise en ligne.
  */
 export const site = {
   name: 'LabTools',
-  url: 'https://www.labtools.example',
-  email: 'contact@labtools.example',
+  url: 'https://www.labtools.tech',
+  email: 'contact@labtools.tech',
   phone: '[+000 00 00 00 00]',
   address: '[Adresse, Ville, Pays]',
   legal: {
@@ -22,11 +23,11 @@ export const site = {
   },
   /** Seuls les réseaux avec une URL renseignée sont affichés. */
   socials: [
-    { label: 'LinkedIn', href: '' },
-    { label: 'Facebook', href: '' },
-    { label: 'Instagram', href: '' },
-    { label: 'X', href: '' },
-  ],
+    { label: 'LinkedIn', icon: 'linkedin', href: '' },
+    { label: 'Facebook', icon: 'facebook', href: '' },
+    { label: 'Instagram', icon: 'instagram', href: '' },
+    { label: 'X', icon: 'x', href: '' },
+  ] as Social[],
 } as const
 
 /**
@@ -39,7 +40,6 @@ export const site = {
  *   const res = await fetch('/api/projects', { method: 'POST', body: JSON.stringify(data) })
  *   if (!res.ok) throw new Error('SUBMIT_FAILED')
  */
-export async function submitProject(data: ProjectSubmission): Promise<void> {
-  void data
-  throw new Error('NOT_CONFIGURED')
+export function submitProject(_data: ProjectSubmission): Promise<void> {
+  return Promise.reject(new Error('NOT_CONFIGURED'))
 }

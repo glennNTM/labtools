@@ -13,5 +13,7 @@ export function Link({ href = '/', onClick, ...rest }: AnchorHTMLAttributes<HTML
     navigate(href)
   }
 
+  // Le contenu arrive via `children` dans `rest`.
+  // eslint-disable-next-line jsx-a11y/anchor-has-content
   return <a href={href} onClick={handleClick} {...rest} />
 }

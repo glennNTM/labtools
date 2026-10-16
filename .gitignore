@@ -31,6 +31,11 @@ lib-cov
 coverage
 *.lcov
 
+# Playwright
+playwright-report
+test-results
+blob-report
+
 # nyc test coverage
 .nyc_output
 
@@ -80,6 +85,8 @@ typings/
 # dotenv environment variables file
 .env
 .env.test
+.env.local
+.env.*.local
 
 # parcel-bundler cache (https://parceljs.org/)
 .cache

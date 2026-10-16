@@ -24,3 +24,9 @@ export type SectionHeadingProps = {
   dark?: boolean
   align?: 'left' | 'center'
 }
+
+export type Social = {
+  label: string
+  icon: IconName
+  href: string
+}

@@ -5,9 +5,9 @@ import { Faq } from '@/components/landing/Faq'
 import { FinalCta } from '@/components/landing/FinalCta'
 import { Hero } from '@/components/landing/Hero'
 import { HowItWorks } from '@/components/landing/HowItWorks'
-import { KeyFigures } from '@/components/landing/KeyFigures'
 import { MidCta } from '@/components/landing/MidCta'
 import { ProblemSolution } from '@/components/landing/ProblemSolution'
+import { Team } from '@/components/landing/Team'
 import { Testimonials } from '@/components/landing/Testimonials'
 
 export function Home() {
@@ -22,10 +22,9 @@ export function Home() {
       <HowItWorks />
       <Testimonials />
       <MidCta />
-      <KeyFigures />
+      <Team />
       <Faq />
       <FinalCta />
-      {/* Emplacement analytics : ajouter <Analytics /> ici, chargé uniquement après consentement si nécessaire. */}
     </div>
   )
 }

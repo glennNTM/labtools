@@ -8,11 +8,10 @@ import { Logo } from '@/components/ui/Logo'
 
 export function Navbar() {
   const [open, setOpen] = useState(false)
-  const [scrolled, setScrolled] = useState(false)
+  const [scrolled, setScrolled] = useState(() => window.scrollY > 8)
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8)
-    onScroll()
     window.addEventListener('scroll', onScroll, { passive: true })
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
@@ -39,11 +38,11 @@ export function Navbar() {
           <Logo />
         </Link>
 
-        <nav aria-label="Navigation principale" className="hidden md:block">
+        <nav aria-label="Navigation principale" className="hidden lg:block">
           <ul className="flex items-center gap-8">
             {nav.map((item) => (
               <li key={item.href}>
-                <a href={item.href} className="py-2 font-medium text-slate transition-colors hover:text-navy">
+                <a href={item.href} className="py-2 font-medium whitespace-nowrap text-slate transition-colors hover:text-navy">
                   {item.label}
                 </a>
               </li>
@@ -53,11 +52,13 @@ export function Navbar() {
 
         <div className="flex items-center gap-2">
           <div className="hidden sm:block">
-            <Button href={cta.primary.href}>{cta.primary.label}</Button>
+            <Button href={cta.primary.href} className="whitespace-nowrap">
+              {cta.primary.label}
+            </Button>
           </div>
           <button
             type="button"
-            className="inline-flex size-12 items-center justify-center rounded-btn text-navy hover:bg-sand md:hidden"
+            className="inline-flex size-12 items-center justify-center rounded-btn text-navy hover:bg-sand lg:hidden"
             aria-expanded={open}
             aria-controls="menu-mobile"
             aria-label={open ? 'Fermer le menu' : 'Ouvrir le menu'}
@@ -68,7 +69,7 @@ export function Navbar() {
         </div>
       </Container>
 
-      <div id="menu-mobile" hidden={!open} className="border-t border-line-soft bg-cream md:hidden">
+      <div id="menu-mobile" hidden={!open} className="border-t border-line-soft bg-cream lg:hidden">
         <Container className="py-4">
           <nav aria-label="Navigation mobile">
             <ul className="flex flex-col">

@@ -21,6 +21,11 @@ export function navigate(to: string) {
   window.scrollTo(0, 0)
 }
 
+/** Retire le slash final : `/cookies/` et `/cookies` désignent la même page. */
+export function normalizePath(pathname: string) {
+  return pathname.replace(/\/+$/, '') || '/'
+}
+
 export function usePathname() {
-  return useSyncExternalStore(subscribe, () => window.location.pathname.replace(/\/+$/, '') || '/')
+  return useSyncExternalStore(subscribe, () => normalizePath(window.location.pathname))
 }
