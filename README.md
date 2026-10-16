@@ -34,6 +34,21 @@ Google Analytics 4, chargé uniquement après accord dans le bandeau cookies (`s
 Copier `.env.example` en `.env.local` et renseigner `VITE_GA_MEASUREMENT_ID` : sans ID, rien n'est chargé.
 | `bun run preview`   | Prévisualiser le build        |
 
+## Docker
+
+Image multi-étapes : build Vite avec Bun, puis nginx sans root (port 8080).
+
+```bash
+docker build -t labtools --build-arg VITE_GA_MEASUREMENT_ID=G-XXXXXXXXXX .
+docker run --rm -p 8080:8080 labtools
+```
+
+L'ID Google Analytics est intégré au bundle au moment du build : il faut reconstruire l'image pour le changer. Sans `--build-arg`, aucune mesure d'audience n'est chargée.
+
+- `docker/nginx.conf` : fallback des routes vers `index.html`, cache permanent pour `/assets/`, `index.html` toujours revalidé, gzip, sonde `/healthz`.
+- `docker/security-headers.conf` : CSP et en-têtes de sécurité. Tout nouveau service tiers (formulaire, vidéo…) doit y être autorisé.
+- Le HTTPS et l'en-tête HSTS sont à configurer au niveau du reverse proxy ou de l'hébergeur, devant le conteneur.
+
 ## Structure
 
 ```

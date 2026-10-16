@@ -1,0 +1,23 @@
+# Dépendances et artefacts : reconstruits dans l'image
+node_modules
+dist
+coverage
+playwright-report
+test-results
+blob-report
+*.tsbuildinfo
+
+# Variables d'environnement : l'ID GA passe par --build-arg, jamais par un .env copié
+.env
+.env.*
+!.env.example
+
+# Outillage local
+.git
+.gitignore
+.vscode
+.idea
+.claude
+*.log
+Dockerfile
+.dockerignore
